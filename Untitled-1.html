@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tətildə Xoşbəxtlik — Login / Register</title>
+  <style>
+ 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; font-family: Inter, sans-serif; background: linear-gradient(180deg,#f0f8ff,#e0f2fe); color:#111; }
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 36px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(23,38,77,0.08);
+      padding: 28px;
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:16px;
+    }
+    .logo {
+      width:46px; height:46px; border-radius:10px;
+      background: linear-gradient(135deg,#facc15,#f97316);
+      display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700;
+      box-shadow: 0 6px 18px rgba(250,204,21,0.18);
+    }
+
+    h1 { font-size:20px; margin-bottom:6px; }
+    p.lead { color:#445; font-size:14px; margin-bottom:18px; }
+
+    .auth-toggle { display:flex; gap:8px; margin-bottom:18px; }
+    .btn {
+      cursor:pointer;
+      padding:8px 14px;
+      border-radius:10px;
+      border:1px solid transparent;
+      background: #f1f5f9;
+      font-weight:600;
+      font-size:14px;
+    }
+    .btn.active {
+      background: linear-gradient(90deg,#f59e0b,#f97316);
+      color:#fff;
+      box-shadow: 0 6px 18px rgba(250,204,21,0.12);
+      border-color: rgba(0,0,0,0.04);
+    }
+
+    form { margin-top:8px; }
+    .field { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+    label { font-size:13px; color:#334155; }
+    input[type="text"], input[type="email"], input[type="password"], textarea {
+      padding:12px 14px; border-radius:10px; border:1px solid #e6eef8; background:#fbfdff;
+      outline: none; font-size:14px;
+    }
+    input:focus, textarea:focus { border-color:#f59e0b; box-shadow: 0 6px 18px rgba(250,204,21,0.06); }
+
+    .row { display:flex; gap:10px; }
+    .row .col { flex:1; }
+
+    .actions { display:flex; justify-content:space-between; align-items:center; margin-top:6px; }
+    .submit {
+      margin-top:10px;
+      display:inline-block;
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      background: linear-gradient(90deg,#f97316,#facc15);
+      color:#fff;
+      font-weight:700;
+      border:none;
+      cursor:pointer;
+      font-size:15px;
+    }
+
+    .muted { color:#6b7280; font-size:13px; }
+
+    .pw-toggle { font-size:13px; color:#374151; cursor:pointer; background:none; border:none; padding:0; }
+
+   
+    .sidebar {
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .ad {
+      background: linear-gradient(180deg,#fff,#fffbf0);
+      border-radius:12px;
+      padding:12px;
+      border:1px dashed rgba(249,115,22,0.4);
+      min-height:150px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+    .ad img { max-width:100%; border-radius:8px; }
+
+    .table-card, .comments-card {
+      background:#fff; border-radius:12px; padding:12px; box-shadow: 0 6px 18px rgba(16,24,40,0.04);
+    }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px 8px; text-align:left; border-bottom:1px solid #f1f5f9; }
+    th { font-size:13px; color:#334155; font-weight:700; background:transparent; }
+    tr:hover td { background: linear-gradient(90deg, rgba(250,204,21,0.03), rgba(249,115,22,0.02)); }
+
+    .badge { display:inline-block; padding:6px 8px; border-radius:999px; font-size:12px; font-weight:700; color:#065f46; background:#d1fae5; }
+
+    /* Comments */
+    .comments-card h3 { font-size:15px; margin-bottom:10px; }
+    .comment { border-bottom:1px solid #f1f5f9; padding:6px 0; font-size:14px; }
+    .comment:last-child { border-bottom:none; }
+    .comment strong { color:#f97316; }
+
+    @media (max-width: 920px) {
+      .wrap { grid-template-columns: 1fr; padding:14px; gap:12px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" aria-live="polite">
+    <section class="card" aria-labelledby="auth-heading">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">HX</div>
+        <div>
+          <div style="font-weight:700">Tətildə Xoşbəxtlik</div>
+          <div style="font-size:13px;color:#64748b">Tur paketlərinə giriş və qeydiyyat</div>
+        </div>
+      </div>
+
+      <h1 id="auth-heading">Hesabınıza daxil olun və ya qeydiyyatdan keçin</h1>
+      <p class="lead">Email və şifrə ilə təhlükəsiz giriş. Yeni istifadəçisinizsə "Qeydiyyat" düyməsini sıxın.</p>
+
+      <div class="auth-toggle" role="tablist" aria-label="Auth switch">
+        <button class="btn active" id="tab-login" role="tab" aria-selected="true">Login</button>
+        <button class="btn" id="tab-register" role="tab" aria-selected="false">Register</button>
+      </div>
+
+      <form id="form-login" autocomplete="on" novalidate>
+        <div class="field">
+          <label for="login-email">Email</label>
+          <input id="login-email" name="email" type="email" placeholder="name@domain.com" required />
+        </div>
+        <div class="field">
+          <label for="login-pw">Şifrə</label>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <input id="login-pw" name="password" type="password" placeholder="Şifrənizi daxil edin" style="flex:1" required />
+            <button type="button" class="pw-toggle" aria-controls="login-pw" data-target="login-pw">Gör</button>
+          </div>
+        </div>
+
+        <div class="actions">
+          <label class="muted"><input type="checkbox" /> Yadda saxla</label>
+          <a href="#" class="muted">Şifrəni unutmusunuz?</a>
+        </div>
+
+        <button type="submit" class="submit">Daxil ol</button>
+      </form>
+      <!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toxunuşla Hərəkət</title>
+<style>
+  body {
+    background: #f0f8ff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  .reklam-anim {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+
+  .reklam-anim img {
+    width: 250px; 
+    border-radius: 12px;
+    transition: transform 0.6s ease-in-out;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h2> Yay Tətillərinə Xoş Gəldiniz!</h2>
+<div class="reklam-anim">
+  <img id="moveImage" 
+       src="c:\Users\acer\Downloads\WhatsApp Image 2025-11-03 at 23.20.21 (1).jpeg" 
+       alt="Tətil şəkli">
+</div>
+
+<script>
+  const image = document.getElementById("moveImage");
+  const positions = ["left", "center", "right", "center"];
+  let index = 0;
+
+  image.addEventListener("click", () => {
+    const pos = positions[index];
+    if (pos === "left") {
+      image.style.transform = "translateX(-150px)";
+    } else if (pos === "center") {
+      image.style.transform = "translateX(0)";
+    } else if (pos === "right") {
+      image.style.transform = "translateX(150px)";
+    }
+
+    index++;
+    if (index >= positions.length) index = 0;
+  });
+</script>
+
+</body>
+
+      
+      <form id="form-register" style="display:none" autocomplete="on" novalidate>
+        <div class="row">
+          <div class="col field">
+            <label for="reg-first">Ad</label>
+            <input id="reg-first" name="first" type="text" placeholder="Adınız" required />
+          </div>
+          <div class="col field">
+            <label for="reg-last">Soyad</label>
+            <input id="reg-last" name="last" type="text" placeholder="Soyadınız" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="reg-email">Email</label>
+          <input id="reg-email" name="email" type="email" placeholder="name@domain.com" required />
+        </div>
+
+        <div class="field">
+          <label for="reg-pw">Şifrə</label>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <input id="reg-pw" name="password" type="password" placeholder="Ən azı 8 simvol" minlength="8" required style="flex:1" />
+            <button type="button" class="pw-toggle" aria-controls="reg-pw" data-target="reg-pw">Gör</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="reg-pw2">Şifrəni təsdiqlə</label>
+          <input id="reg-pw2" name="password2" type="password" placeholder="Şifrəni yenidən yazın" required />
+        </div>
+
+        <button type="submit" class="submit">Qeydiyyatdan keç</button>
+      </form>
+      
+
+    </section>
+    <aside class="sidebar">
+    
+      <div class="ad card" role="complementary" aria-label="Reklam bölməsi">
+        <div style="max-width:100%; text-align:center;">
+          <img src="c:\Users\acer\Downloads\WhatsApp Image 2025-11-02 at 18.32.19.jpeg" alt="Reklam nümunəsi" />
+          <div style="margin-top:8px; font-size:13px; color:#1963c9">Ən yaxşı imkanlar</div>
+        </div>
+      </div>
+
+      <div class="table-card card" aria-label="İstifadəçi cədvəli">
+        <h3>Əlaqələr</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Əlaqə</th>
+              <th>Email</th>
+              <th>Vəzifə</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Rəşad Məmmədov</td>
+              <td>rashad@example.com</td>
+              <td><span class="badge">Otel Meneceri</span></td>
+            </tr>
+            <tr>
+              <td>Günel Əliyeva</td>
+              <td>gunel@example.com</td>
+              <td><span class="badge" style="background:#fff3cd;color:#664d03">İnsan resursları mütəxəssisi</span></td>
+            </tr>
+            <tr>
+              <td>Elvin Həsənov</td>
+              <td>elvin@example.com</td>
+              <td><span class="badge" style="background:#e6f8ff;color:#035388">Satış Meneceri</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hərəkətli Reklam</title>
+<style>
+  body {
+    background: #f0f8ff;
+    font-family: Arial, sans-serif;
+  }
+
+  .ad-container {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #e0f7fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 40px;
+  }
+
+  .ad-move {
+    position: absolute;
+    top: 20px;
+    width: 300px;
+    animation: slide 12s linear infinite;
+  }
+
+  @keyframes slide {
+    0% {
+      left: -350px;
+    }
+    50% {
+      left: calc(100% - 300px);
+    }
+    100% {
+      left: -350px;
+    }
+  }
+
+  .ad-move img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .ad-text {
+    text-align: center;
+    font-size: 18px;
+    color: #00695c;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center;">🌴 Yay Tətillərinə Xoş Gəldiniz!</h2>
+
+<div class="ad-container">
+  <div class="ad-move">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Tətil Reklamı">
+    <div class="ad-text">Maldiv adalarında 50% endirim! 🌊</div>
+  </div>
+</div>
+
+</body>
+</html>
+
+      <div class="comments-card card" aria-label="İstifadəçi şərhləri">
+        
+        <div class="comment"><strong>Charlie:</strong> Qiymətlər münasib və xidmət keyfiyyəti yüksəkdir.</div>
+        <div class="comment"><strong>Gülsənəm:</strong>Qiymətlər çox baha idi,heç razı qalmadım.</div>
+        <div class="comment"><strong>Ayxan:</strong> Bu tur paketləri çox yaxşı idi, ailəmlə əla vaxt keçirdik!</div>
+        <div class="comment"><strong>Leyla:</strong> Rezervasiya prosesi rahat və sürətli oldu.</div>
+
+        <form id="comment-form" style="margin-top:10px;">
+          <textarea name="comment" placeholder="Şərhinizi yazın..." rows="2" required></textarea>
+          <button type="submit" class="submit" style="margin-top:6px;">Göndər</button>
+        </form>
+      </div>
+
+    </aside>
+  </main>
+
+  <script>
+
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+    const formLogin = document.getElementById('form-login');
+    const formRegister = document.getElementById('form-register');
+
+    tabLogin.addEventListener('click',()=>{
+      tabLogin.classList.add('active'); tabRegister.classList.remove('active');
+      tabLogin.setAttribute('aria-selected','true'); tabRegister.setAttribute('aria-selected','false');
+      formLogin.style.display=''; formRegister.style.display='none';
+    });
+
+    tabRegister.addEventListener('click',()=>{
+      tabRegister.classList.add('active'); tabLogin.classList.remove('active');
+      tabRegister.setAttribute('aria-selected','true'); tabLogin.setAttribute('aria-selected','false');
+      formRegister.style.display=''; formLogin.style.display='none';
+    });
+
+    document.querySelectorAll('.pw-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const input=document.getElementById(btn.dataset.target);
+        if(input.type==='password'){input.type='text'; btn.innerText='Gizlət';}
+        else {input.type='password'; btn.innerText='Gör';}
+      });
+    });
+
+    formLogin.addEventListener('submit', e=>{e.preventDefault(); alert('Demo: login uğurlu'); formLogin.reset();});
+    formRegister.addEventListener('submit', e=>{
+      e.preventDefault();
+      const pw=formRegister.querySelector('input[name="password"]').value;
+      const pw2=formRegister.querySelector('input[name="password2"]').value;
+      if(pw!==pw2){alert('Şifrələr uyğun deyil!'); return;}
+      alert('Demo: qeydiyyat uğurlu'); formRegister.reset(); tabLogin.click();
+    });
+
+    const commentForm=document.getElementById('comment-form');
+    commentForm.addEventListener('submit', e=>{
+      e.preventDefault();
+      const textarea=commentForm.querySelector('textarea');
+      if(!textarea.value.trim()){alert('Şərh boş ola bilməz'); return;}
+      const div=document.createElement('div');
+      div.className='comment';
+      div.innerHTML=<strong>Yeni istifadəçi:</strong> ${textarea.value};
+      commentForm.parentElement.insertBefore(div, commentForm);
+      textarea.value='';
+    });
+  </script>
+</body>
+</html>
