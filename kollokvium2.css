@@ -1,0 +1,261 @@
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: #fafafa;
+  color: #222;
+}
+
+.container {
+  width: 90%;
+  max-width: 1150px;
+  margin: auto;
+}
+
+.navbar {
+  background: #fff;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+  font-style: inherit ;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 23px;
+}
+
+.menu a {
+  text-decoration: none;
+  margin: 0 15px;
+  color: #444;
+  font-weight: 500;
+}
+
+.icons .icon {
+  width: 22px;
+  margin-left: 15px;
+}
+
+
+.categories-container {
+    padding: 0 0 40px; 
+    text-align: center;
+}
+.categories-flex {
+    display: flex;
+    justify-content: center;   
+    gap: 20px;
+    flex-wrap: wrap;           
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 0 15px;}
+
+.cat-card {
+    width: 110px;        
+    padding: 15px;
+    background: rgb(255, 255, 255);
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); 
+    transition: transform 0.2s;
+}
+
+.cat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.cat-card img {
+    width: 100%;
+    height: 90px;             
+    object-fit: contain;    
+    border-radius: 10px;
+    background-color: #f7f7f7; 
+}
+
+.cat-card p {
+    margin-top: 10px;
+    font-size: 14px; 
+    font-weight: 500;
+    margin-bottom: 0;
+}
+.categories {
+    display: flex;
+    justify-content: center;   
+    gap: 20px;
+    flex-wrap: wrap;          
+    text-align: center;}   
+.categories {
+    display: flex;
+    gap: 20px;
+}
+
+.cat-card {
+    width: 110px;             
+    padding: 15px;
+    background: rgb(255, 255, 255);
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cat-card img {
+    width: 100%;
+    height: 110px;             
+    object-fit: cover;         
+    border-radius: 10px;
+}
+
+.cat-card p {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.tasty h1 {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 32px;
+}
+
+.subtitle {
+  text-align: center;
+  max-width: 600px;
+  margin: auto;
+  color: #777;
+}
+
+
+.grid {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.card {
+  background: #d5f2f6;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 22px rgba(0,0,0,0.07);
+}
+
+.card-img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+.reklam{
+  width: 100%;
+  height: 100%;
+  background-image:url();
+  background-repeat:no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-info {
+  padding: 15px;
+}
+
+
+.card-info h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #777;
+  font-size: 14px;
+}
+
+body {
+    font-family: 'Inter', 'Roboto', Arial, sans-serif; 
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; 
+}
+.newsletter-full-block {
+    max-width: 1000px; 
+    margin: 50px auto; 
+    padding: 60px 40px; 
+    background-color: #e0f2f7;
+    border-radius: 20px; 
+    text-align: center;
+    position: relative; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); 
+}
+
+.newsletter-full-block h3 {
+    font-size: 36px; 
+    color: #333333; 
+    margin-bottom: 15px;
+    font-weight: 700; 
+}
+
+.newsletter-full-block p {
+    font-size: 16px;
+    color: #666666; 
+    margin-bottom: 40px;
+    max-width: 600px; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#newsletter-form-new {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 15px; 
+    max-width: 450px; 
+    margin: 0 auto; 
+}
+
+#newsletter-form-new input[type="email"] {
+    flex-grow: 1; 
+    padding: 14px 20px;
+    border: none; 
+    border-radius: 30px; 
+    font-size: 16px;
+  
+    background-image: url('c:\Users\acer\Downloads\WhatsApp Image 2025-11-15 at 17.26.31 (1).jpeg'); /* ⬅️ ŞƏKİL YOLUNU DƏYİŞİN */
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    color: #6b6868; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+    outline: none; 
+}
+
+#newsletter-form-new input[type="email"]::placeholder {
+    color: rgba(96, 93, 93, 0.7); 
+}
+
+#newsletter-form-new button {
+    padding: 14px 30px;
+    background-color: #000000; 
+    color: white;
+    border: none;
+    border-radius: 30px; 
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    white-space: nowrap; 
+}
+
+#newsletter-form-new button:hover {
+    background-color: #333333; 
+}
+
+@media (max-width: 768px) {
+
+.site-footer{padding:22px 0; text-align:center; color:var(--muted); border-top:1px solid #eee}
+}
